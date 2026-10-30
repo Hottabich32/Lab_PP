@@ -1,10 +1,10 @@
 #include "LockGuardWinAPI.h"
 
-LockGuardWinAPI::LockGuardWinAPI(CRITICAL_SECTION& cs){
+LockGuardWinAPI::LockGuardWinAPI(CRITICAL_SECTION& cs) {
 	section = &cs;
 	EnterCriticalSection(section);
 }
 
-LockGuardWinAPI::~LockGuardWinAPI(){
+LockGuardWinAPI::~LockGuardWinAPI() {
 	LeaveCriticalSection(section);
-}
+}S

@@ -16,7 +16,7 @@ CRITICAL_SECTION cs_console;
 void fillMatrix(int** pMatr, size_t pRow, size_t pCol) {
 	int value = 1;
 
-	for (int i = 0; i < pRow; ++i) {
+	for (int i = 0; i < pRow; ++i) {S
 		for (int j = 0; j < pCol; ++j) {
 			pMatr[i][j] = value;
 			value++;
@@ -48,7 +48,6 @@ void sumThread(long volatile& global_sum) {
 	int local_sum{};
 
 	while (TSQ.try_pop(pair)) {
-		//local_sum += sumEvenFirstDigit(pair.matrix, pair.row, COL);
 		for (int i = 0; i < pair.row; ++i) {
 			for (int j = 0; j < COL; ++j) {
 				int value = abs(pair.matrix[i][j]);
@@ -82,8 +81,6 @@ int sum_parallel(int** matrix) {
 		TSQ.push(Pair{ beg, row });
 		beg += chunk;
 	}
-
-	TSQ.finish();
 
 	std::thread thr[NTHREAD - 1];
 	long volatile global_sum{};

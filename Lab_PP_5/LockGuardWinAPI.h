@@ -12,3 +12,4 @@ public:
 	LockGuardWinAPI& operator=(const LockGuardWinAPI&) = delete;
 };
 
+S
