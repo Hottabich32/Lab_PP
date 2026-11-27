@@ -21,25 +21,12 @@ void ThreadSafeQueue::push(Pair elem) {
 	}
 }
 
-bool ThreadSafeQueue::pop(Pair& elem) {
+bool ThreadSafeQueue::try_pop(Pair& elem) {
 	bool result{ false };
 	LockGuardWinAPI locker(cs);
 
 	while (queue.empty() && !closed)
-		SleepConditionVariableCS(&cvNotFull, &cs, INFINITE);
-
-	if (!queue.empty()) {
-		result = true;
-		elem = queue.front();
-		queue.pop();
-		WakeConditionVariable(&cvNotFull);
-	}
-	return result;
-}
-
-bool ThreadSafeQueue::try_pop(Pair& elem) {
-	bool result{ false };
-	LockGuardWinAPI locker(cs);
+		SleepConditionVariableCS(&cvNotEmpty, &cs, INFINITE);
 
 	if (!queue.empty()) {
 		result = true;
@@ -59,6 +46,7 @@ void ThreadSafeQueue::close() {
 	closed = true;
 	WakeAllConditionVariable(&cvNotEmpty);
 	WakeAllConditionVariable(&cvNotFull);
+
 }
 
 

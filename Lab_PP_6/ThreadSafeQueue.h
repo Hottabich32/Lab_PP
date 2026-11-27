@@ -21,7 +21,6 @@ public:
 	~ThreadSafeQueue();
 
 	void push(Pair elem);
-	bool pop(Pair& elem);
 	bool try_pop(Pair& elem);
 	bool empty();
 	void close();
